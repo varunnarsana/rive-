@@ -1,0 +1,11 @@
+<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lofiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8E9AAF"/>
+      <stop offset="100%" style="stop-color:#CBC0D3"/>
+    </linearGradient>
+  </defs>
+  <rect width="60" height="60" fill="url(#lofiGradient)"/>
+  <circle cx="30" cy="30" r="15" fill="white" opacity="0.2"/>
+  <path d="M25 20 L25 40 L40 30 Z" fill="white" opacity="0.6"/>
+</svg> 
