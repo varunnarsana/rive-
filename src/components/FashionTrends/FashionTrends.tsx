@@ -22,10 +22,100 @@ interface FashionTrend {
   availability: 'In Stock' | 'Pre-Order' | 'Coming Soon';
 }
 
+interface AestheticLook {
+  id: string;
+  title: string;
+  image: string;
+  colors: string[];
+  keywords: string[];
+  description: string;
+}
+
+// Define theme interface
+interface Theme {
+  spacing: {
+    xl: string;
+    lg: string;
+    md: string;
+    sm: string;
+    [key: string]: string;
+  };
+  colors: {
+    primary: string;
+    secondary: string;
+    background: {
+      primary: string;
+      secondary: string;
+    };
+    text: {
+      primary: string;
+      secondary: string;
+    };
+    [key: string]: any;
+  };
+  typography: {
+    primary: string;
+    secondary: string;
+    [key: string]: string;
+  };
+  borderRadius: {
+    lg: string;
+    md: string;
+    sm: string;
+    [key: string]: string;
+  };
+  shadows: {
+    sm: string;
+    md: string;
+    lg: string;
+    [key: string]: string;
+  };
+  [key: string]: any;
+}
+
+const defaultTheme: Theme = {
+  spacing: {
+    xl: '2rem',
+    lg: '1.5rem',
+    md: '1rem',
+    sm: '0.5rem',
+  },
+  colors: {
+    primary: '#8E6B9E',
+    secondary: '#4A3858',
+    background: {
+      primary: '#FFFFFF',
+      secondary: '#F8F9FA',
+    },
+    text: {
+      primary: '#1A1A1A',
+      secondary: '#666666',
+    },
+  },
+  typography: {
+    primary: '"Playfair Display", serif',
+    secondary: '"Roboto", sans-serif',
+  },
+  borderRadius: {
+    lg: '16px',
+    md: '12px',
+    sm: '8px',
+  },
+  shadows: {
+    sm: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    md: '0 4px 12px rgba(0, 0, 0, 0.15)',
+    lg: '0 8px 24px rgba(0, 0, 0, 0.2)',
+  },
+};
+
+// Create a styled component with simplified theme handling
 const Container = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: ${({ theme }) => theme.spacing.xl};
+  gap: ${defaultTheme.spacing.xl};
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
 `;
 
 const MainContent = styled.div`
@@ -181,6 +271,153 @@ const StatValue = styled.span`
   font-weight: 600;
 `;
 
+const AestheticGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+interface AestheticCardProps {
+  image: string;
+}
+
+const AestheticCard = styled.div<AestheticCardProps>`
+  position: relative;
+  height: 500px;
+  border-radius: 16px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    
+    .glass-overlay {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.7);
+    }
+    
+    .content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  overflow: hidden;
+  background: url(${(props: AestheticCardProps) => props.image}) center/cover no-repeat;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    
+    .glass-overlay {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+    }
+    
+    .content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+`;
+
+const GlassOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
+const AestheticContent = styled.div`
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 12px;
+  transform: translateY(20px);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+`;
+
+const AestheticTitle = styled.h3`
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+  color: #1a1a1a;
+`;
+
+const ColorPalette = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+`;
+
+const ColorSwatch = styled.div<{ color: string }>`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: ${props => props.color};
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+`;
+
+const Keywords = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+`;
+
+const Keyword = styled.span`
+  background: rgba(0, 0, 0, 0.05);
+  color: #333;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+`;
+
+const CopyButton = styled.button`
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  
+  &:hover {
+    background: #333;
+    transform: translateY(-2px);
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
 // Mock data
 const mockTrends: FashionTrend[] = [
   {
@@ -223,8 +460,60 @@ const mockTrends: FashionTrend[] = [
   }
 ];
 
+const aestheticLooks: AestheticLook[] = [
+  {
+    id: '1',
+    title: 'Dark Academia',
+    image: 'https://source.unsplash.com/random/600x800/?dark-academia-fashion',
+    colors: ['#3E2723', '#5D4037', '#8D6E63', '#BCAAA4', '#D7CCC8'],
+    keywords: ['Tweed blazers', 'Oxford shirts', 'Pleated skirts', 'Leather satchels', 'Wingtip shoes'],
+    description: 'Scholarly elegance meets vintage charm with structured silhouettes and rich textures.'
+  },
+  {
+    id: '2',
+    title: 'Y2K Revival',
+    image: 'https://source.unsplash.com/random/600x800/?y2k-fashion',
+    colors: ['#FF4081', '#00BCD4', '#FFEB3B', '#9C27B0', '#E91E63'],
+    keywords: ['Low-rise jeans', 'Crop tops', 'Frosted lips', 'Chunky sneakers', 'Logo mania'],
+    description: 'Early 2000s nostalgia with a futuristic twist, embracing bold colors and playful accessories.'
+  },
+  {
+    id: '3',
+    title: 'Clean Girl',
+    image: 'https://source.unsplash.com/random/600x800/?minimal-fashion',
+    colors: ['#FFFFFF', '#F5F5F5', '#E0E0E0', '#9E9E9E', '#212121'],
+    keywords: ['White tank tops', 'Straight-leg jeans', 'Gold hoops', 'Slicked-back buns', 'Minimal makeup'],
+    description: 'Effortless elegance through neutral palettes and timeless wardrobe staples.'
+  },
+  {
+    id: '4',
+    title: 'Softcore',
+    image: 'https://source.unsplash.com/random/600x800/?pastel-fashion',
+    colors: ['#F8BBD0', '#B3E5FC', '#C8E6C9', '#FFF9C4', '#D1C4E9'],
+    keywords: ['Pastel knits', 'Flowy dresses', 'Cardigans', 'Mary janes', 'Pearl accessories'],
+    description: 'Dreamy aesthetics with soft textures and romantic silhouettes for a delicate look.'
+  },
+  {
+    id: '5',
+    title: 'Cyber Fairy',
+    image: 'https://source.unsplash.com/random/600x800/?cyber-fashion',
+    colors: ['#00E5FF', '#FF00FF', '#00FFB3', '#9D00FF', '#FFD600'],
+    keywords: ['Iridescent fabrics', 'Platform boots', 'Futuristic sunglasses', 'Holographic details', 'Techwear'],
+    description: 'A futuristic blend of digital aesthetics and ethereal fairy elements.'
+  },
+  {
+    id: '6',
+    title: 'Indie Sleaze',
+    image: 'https://source.unsplash.com/random/600x800/?indie-fashion',
+    colors: ['#000000', '#FF0000', '#FFFFFF', '#808080', '#FFFF00'],
+    keywords: ['Band tees', 'Leather jackets', 'Skinny jeans', 'Converse', 'Vintage sunglasses'],
+    description: 'Raw, edgy style inspired by the 2010s indie music scene and underground culture.'
+  }
+];
+
 export const FashionTrends = () => {
   const [selectedTrend, setSelectedTrend] = useState<FashionTrend | null>(null);
+  const [copiedLook, setCopiedLook] = useState<string | null>(null);
 
   const totalPopularity = mockTrends.reduce((sum, trend) => sum + trend.popularity, 0);
   const averagePopularity = Math.round(totalPopularity / mockTrends.length);
@@ -232,9 +521,59 @@ export const FashionTrends = () => {
     prev.popularity > current.popularity ? prev : current
   ).style;
 
+  const handleCopyFit = (title: string) => {
+    const look = aestheticLooks.find(look => look.title === title);
+    if (look) {
+      const textToCopy = `Outfit Inspiration: ${look.title}\n\nKeywords: ${look.keywords.join(', ')}\n\n${look.description}`;
+      navigator.clipboard.writeText(textToCopy);
+      setCopiedLook(title);
+      setTimeout(() => setCopiedLook(null), 2000);
+    }
+  };
+
   return (
     <Container>
       <MainContent>
+        <Section>
+          <SectionTitle>👗 TRENDING FASHION — The Aesthetic Vogueboard</SectionTitle>
+          <p style={{ textAlign: 'center', fontSize: '1.1rem', color: '#666', marginBottom: '2rem' }}>
+            "See what's trending — from sidewalk to catwalk, filtered by aesthetic and fueled by the Gen-Z fashion engine."
+          </p>
+          
+          <div style={{ marginBottom: '4rem' }}>
+            <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>Dressed by Vibe</h3>
+            <AestheticGrid>
+              {aestheticLooks.map((look) => (
+                <AestheticCard 
+                  key={look.id} 
+                  image={look.image}
+                  onClick={() => handleCopyFit(look.title)}
+                >
+                  <GlassOverlay className="glass-overlay">
+                    <AestheticContent className="content">
+                      <AestheticTitle>{look.title}</AestheticTitle>
+                      <p style={{ color: '#444', marginBottom: '1rem' }}>{look.description}</p>
+                      <ColorPalette>
+                        {look.colors.map((color, idx) => (
+                          <ColorSwatch key={idx} color={color} />
+                        ))}
+                      </ColorPalette>
+                      <Keywords>
+                        {look.keywords.map((keyword, idx) => (
+                          <Keyword key={idx}>{keyword}</Keyword>
+                        ))}
+                      </Keywords>
+                      <CopyButton>
+                        {copiedLook === look.title ? 'Copied! ✅' : 'Copy this fit'}
+                      </CopyButton>
+                    </AestheticContent>
+                  </GlassOverlay>
+                </AestheticCard>
+              ))}
+            </AestheticGrid>
+          </div>
+        </Section>
+
         <Section>
           <SectionTitle>Trending Styles</SectionTitle>
           <AnimatePresence>

@@ -1,5 +1,9 @@
-import styled from 'styled-components';
-import { DefaultTheme, keyframes } from 'styled-components';
+import { useState, useEffect } from 'react';
+import styled, { keyframes, DefaultTheme } from 'styled-components';
+import Typewriter from '../../components/Typewriter/Typewriter';
+import WorldMap from '../../components/WorldMap/WorldMap';
+import FoodSection from '../../components/FoodCards/FoodSection';
+import TikTokFoodSection from '../../components/TikTokFood/TikTokFoodSection';
 
 interface StyledProps {
   theme: DefaultTheme;
@@ -30,6 +34,12 @@ const Container = styled.div<StyledProps>`
   background: ${({ theme }) => theme.colors.background};
   min-height: 100vh;
   width: 100%;
+  overflow-x: hidden;
+`;
+
+const WorldAestheticsSection = styled.section`
+  width: 100%;
+  margin: 6rem 0;
 `;
 
 const ContentContainer = styled.main<StyledProps>`
@@ -57,6 +67,237 @@ const SlangSection = styled.section`
   padding: 4rem 0;
   background: ${({ theme }) => theme.colors.background};
   position: relative;
+`;
+
+const LooksSection = styled.section`
+  margin: 6rem 0;
+  padding: 4rem 0;
+  position: relative;
+`;
+
+const LooksContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  position: relative;
+  height: 400px;
+`;
+
+const LookCard = styled.div`
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  background: ${({ theme }) => theme.colors.background.primary};
+  
+  &:nth-child(1) {
+    transform: rotate(-5deg) translateY(10px);
+    z-index: 3;
+    left: 20%;
+  }
+  
+  &:nth-child(2) {
+    transform: rotate(2deg) translateY(5px);
+    z-index: 2;
+    left: 40%;
+  }
+  
+  &:nth-child(3) {
+    transform: rotate(-2deg) translateY(0);
+    z-index: 1;
+    left: 60%;
+  }
+  
+  &:hover {
+    transform: scale(1.05) !important;
+    z-index: 10 !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    
+    &::before {
+      opacity: 1;
+    }
+    
+    .look-overlay {
+      opacity: 1;
+    }
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(255, 215, 0, 0.7);
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+`;
+
+const LookImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  
+  ${LookCard}:hover & {
+    transform: scale(1.1);
+  }
+`;
+
+const LookOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 2rem;
+  text-align: center;
+`;
+
+const LookQuote = styled.p`
+  color: white;
+  font-size: 1.2rem;
+  font-style: italic;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+  line-height: 1.6;
+  
+  &::before, &::after {
+    content: '"';
+    font-size: 2rem;
+    line-height: 0;
+    vertical-align: middle;
+    opacity: 0.8;
+  }
+`;
+
+const CulturalPulseSection = styled.section`
+  margin: 8rem 0;
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+  background: ${({ theme }) => theme.colors.background.secondary};
+`;
+
+const PulseContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+`;
+
+const PulseTitle = styled.h2`
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.text.primary};
+  margin-bottom: 3rem;
+  position: relative;
+  display: inline-block;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #d4af37, #f0e68c);
+  }
+`;
+
+const TypewriterText = styled.div`
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.text.primary};
+  min-height: 4rem;
+  margin: 2rem 0;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.5s forwards;
+  
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+`;
+
+const TickerContainer = styled.div`
+  margin-top: 4rem;
+  padding: 1.5rem 0;
+  background: rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  position: relative;
+  
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  &::before {
+    left: 0;
+    background: linear-gradient(90deg, ${({ theme }) => theme.colors.background.secondary}, transparent);
+  }
+  
+  &::after {
+    right: 0;
+    background: linear-gradient(90deg, transparent, ${({ theme }) => theme.colors.background.secondary});
+  }
+`;
+
+const TickerTrack = styled.div`
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: scroll 40s linear infinite;
+  
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+`;
+
+const TickerItem = styled.span`
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  margin: 0 2rem;
+  white-space: nowrap;
+  position: relative;
+  
+  &::after {
+    content: '•';
+    margin-left: 2rem;
+    color: #d4af37;
+  }
+  
+  &:last-child::after {
+    display: none;
+  }
 `;
 
 const SlangList = styled.div`
@@ -337,6 +578,24 @@ const playlists: Playlist[] = [
   }
 ];
 
+const curatedLooks = [
+  {
+    id: '1',
+    imageUrl: 'https://source.unsplash.com/random/600x800/?fashion,runway,1',
+    quote: 'Elegance is refusal — Coco Chanel'
+  },
+  {
+    id: '2',
+    imageUrl: 'https://source.unsplash.com/random/600x800/?fashion,runway,2',
+    quote: 'Style is a way to say who you are without having to speak — Rachel Zoe'
+  },
+  {
+    id: '3',
+    imageUrl: 'https://source.unsplash.com/random/600x800/?fashion,runway,3',
+    quote: 'Fashion is the armor to survive the reality of everyday life — Bill Cunningham'
+  }
+];
+
 const slangTerms: SlangTerm[] = [
   {
     id: '1',
@@ -359,6 +618,20 @@ const slangTerms: SlangTerm[] = [
 ];
 
 const TrendsPage: React.FC = () => {
+  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+  const headlines = [
+    'Soft Grunge is back',
+    'Espresso is the new matcha',
+    'Goth Coquette: the fusion we didn\'t expect'
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeadlineIndex(prev => (prev + 1) % headlines.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [headlines.length]);
+
   console.log('TrendsPage rendered');
   console.log('Playlists:', playlists);
   console.log('Slang terms:', slangTerms);
@@ -366,6 +639,51 @@ const TrendsPage: React.FC = () => {
   return (
     <Container>
       <ContentContainer>
+        <TikTokFoodSection />
+        <FoodSection />
+        <WorldAestheticsSection>
+          <SectionTitle>🌍 World Aesthetics Radar</SectionTitle>
+          <WorldMap />
+        </WorldAestheticsSection>
+        <CulturalPulseSection>
+          <PulseContainer>
+            <PulseTitle>🗞️ The Cultural Pulse</PulseTitle>
+            <TypewriterText>
+              <Typewriter 
+                text={headlines[currentHeadlineIndex]} 
+                speed={50}
+                delay={0}
+              />
+            </TypewriterText>
+            
+            <TickerContainer>
+              <TickerTrack>
+                {[...headlines, ...headlines].map((headline, index) => (
+                  <TickerItem key={`${headline}-${index}`}>
+                    {headline}
+                  </TickerItem>
+                ))}
+              </TickerTrack>
+            </TickerContainer>
+          </PulseContainer>
+        </CulturalPulseSection>
+        <LooksSection>
+          <SectionTitle>👗 Curated Looks of the Week</SectionTitle>
+          <LooksContainer>
+            {curatedLooks.map((look) => (
+              <LookCard key={look.id}>
+                <LookImage 
+                  src={look.imageUrl} 
+                  alt={`Fashion look ${look.id}`} 
+                  loading="lazy"
+                />
+                <LookOverlay className="look-overlay">
+                  <LookQuote>{look.quote}</LookQuote>
+                </LookOverlay>
+              </LookCard>
+            ))}
+          </LooksContainer>
+        </LooksSection>
         <PlaylistsSection>
           <SectionTitle>🎧 Posh Playlists</SectionTitle>
           <PlaylistCarousel>
