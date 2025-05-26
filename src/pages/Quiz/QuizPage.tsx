@@ -254,7 +254,9 @@ export const QuizPage = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <ResultTitle>Your Aesthetic: {result}</ResultTitle>
-          <ResultDescription>{aestheticDescriptions[result]}</ResultDescription>
+          <ResultDescription>{
+            aestheticDescriptions[result as keyof typeof aestheticDescriptions] || 'No description available.'
+          }</ResultDescription>
           <NavButton onClick={() => {
             setCurrentQuestion(0);
             setAnswers([]);

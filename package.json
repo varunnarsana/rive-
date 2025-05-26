@@ -4,12 +4,26 @@
   "description": "Riva - Gen Z Trend Discovery Platform",
   "type": "module",
   "scripts": {
-    "start": "node start.js",
     "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "build": "vite build",
     "preview": "vite preview",
-    "install:all": "npm install && cd backend && npm install"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.4",
@@ -31,6 +45,7 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
+    "@types/node": "^22.15.21",
     "@types/react": "^18.3.22",
     "@types/react-dom": "^18.3.7",
     "@types/react-simple-maps": "^3.0.6",

@@ -1,3 +1,6 @@
+// This file contains type definitions for your theme.
+// It extends the styled-components DefaultTheme interface.
+
 import 'styled-components';
 
 declare module 'styled-components' {
@@ -50,10 +53,5 @@ declare module 'styled-components' {
       md: string;
       lg: string;
     };
-    transitions: {
-      default: string;
-      fast: string;
-      slow: string;
-    };
   }
-} 
+}

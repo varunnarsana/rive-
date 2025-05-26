@@ -7,6 +7,8 @@ import TrendsPage from './pages/TrendsPage/TrendsPage';
 import { AestheticsPage } from './pages/Aesthetics/AestheticsPage';
 import { QuizPage } from './pages/Quiz/QuizPage';
 import { SocialPage } from './pages/Social/SocialPage';
+import { FashionTrends } from './components/FashionTrends/FashionTrends';
+import { MusicTrends } from './components/MusicTrends/MusicTrends';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
               <Route path="/social" element={<SocialPage />} />
               <Route path="/profile" element={<div>Profile Page Coming Soon</div>} />
               <Route path="/profile/settings" element={<div>Settings Page Coming Soon</div>} />
+              <Route path="/fashion" element={<FashionTrends />} />
+              <Route path="/music" element={<MusicTrends />} />
             </Routes>
           </div>
         </Router>

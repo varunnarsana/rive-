@@ -205,27 +205,6 @@ class MusicTrendingService {
       return [];
     }
   }
-
-  private calculateTrendScore(track: TrendingTrack): number {
-    const weights = {
-      streams: 0.4,
-      chartPosition: 0.3,
-      growthRate: 0.2,
-      viralScore: 0.1
-    };
-
-    const normalizedStreams = Math.min(track.metrics.streams / 1000000, 1);
-    const normalizedChart = (100 - track.metrics.chartPosition) / 100;
-    const normalizedGrowth = Math.min(track.metrics.growthRate / 100, 1);
-    const normalizedViral = track.metrics.viralScore / 100;
-
-    return (
-      normalizedStreams * weights.streams +
-      normalizedChart * weights.chartPosition +
-      normalizedGrowth * weights.growthRate +
-      normalizedViral * weights.viralScore
-    );
-  }
 }
 
 export const musicService = MusicTrendingService.getInstance(); 

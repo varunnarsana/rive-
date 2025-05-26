@@ -199,7 +199,7 @@ export const Header = () => {
     <>
       <HeaderContainer>
         <HeaderContent>
-          <Logo to="/">Éclat</Logo>
+          <Logo to="/">Riva</Logo>
           <Nav>
             <NavLink to="/" $active={location.pathname === '/'}>
               Home
@@ -209,6 +209,12 @@ export const Header = () => {
             </NavLink>
             <NavLink to="/trends" $active={location.pathname === '/trends'}>
               Trends
+            </NavLink>
+            <NavLink to="/fashion" $active={location.pathname === '/fashion'}>
+              Fashion
+            </NavLink>
+            <NavLink to="/music" $active={location.pathname === '/music'}>
+              Music
             </NavLink>
             <NavLink to="/social" $active={location.pathname === '/social'}>
               Social

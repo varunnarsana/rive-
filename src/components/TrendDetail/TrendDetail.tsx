@@ -207,7 +207,7 @@ export const TrendDetail = ({ trend, onClose }: TrendDetailProps) => {
             <MetaInfo>
               <span>{trend.category}</span>
               <span>•</span>
-              <span>{trend.timestamp}</span>
+              <span>{trend.date}</span>
             </MetaInfo>
           </HeaderOverlay>
         </Header>
@@ -218,16 +218,16 @@ export const TrendDetail = ({ trend, onClose }: TrendDetailProps) => {
             <Description>{trend.description}</Description>
             <Stats>
               <StatItem>
-                <StatValue>{trend.growthRate}%</StatValue>
-                <StatLabel>Growth Rate</StatLabel>
+                <StatValue>{trend.growth}%</StatValue>
+                <StatLabel>Growth</StatLabel>
               </StatItem>
               <StatItem>
                 <StatValue>{trend.source}</StatValue>
                 <StatLabel>Source</StatLabel>
               </StatItem>
               <StatItem>
-                <StatValue>{trend.context}</StatValue>
-                <StatLabel>Context</StatLabel>
+                <StatValue>{trend.interactions.likes}</StatValue>
+                <StatLabel>Likes</StatLabel>
               </StatItem>
             </Stats>
           </Section>
