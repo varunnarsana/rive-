@@ -155,7 +155,7 @@ const Pronunciation = styled.div`
 
 const Divider = styled.div`
   height: 1px;
-  background: ${({ theme }) => theme.colors.secondary.darkSlate};
+  background: ${({ theme }) => theme.colors.text.secondary};
   margin: 1rem 0;
   opacity: 0.2;
 `;
@@ -359,6 +359,10 @@ const slangTerms: SlangTerm[] = [
 ];
 
 const TrendsPage: React.FC = () => {
+  console.log('TrendsPage rendered');
+  console.log('Playlists:', playlists);
+  console.log('Slang terms:', slangTerms);
+  
   return (
     <Container>
       <ContentContainer>
